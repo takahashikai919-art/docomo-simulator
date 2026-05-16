@@ -365,32 +365,7 @@ const chartData = [
   return (
     <div className="min-h-screen bg-slate-100 p-6">
       <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
-
-        {/* Header */}
-        <div className="grid grid-cols-1 md:grid-cols-3 bg-slate-50 border-b">
-
-          <div className="p-5"></div>
-
-          <div className="p-5 text-center border-l">
-            <div className="text-xl md:text-3xl font-black text-amber-500">
-              GOLD
-            </div>
-
-            <div className="mt-2">
-              年会費 11,000円
-            </div>
-          </div>
-
-          <div className="p-5 text-center border-l">
-            <div className="text-xl md:text-3xl font-black text-zinc-700">
-              PLATINUM
-            </div>
-
-            <div className="mt-2">
-              年会費 29,700円
-            </div>
-          </div>
-        </div>
+        
 {/* オプション */}
 <div className="p-5 border-b bg-slate-50">
 
