@@ -1,5 +1,4 @@
 import {
-  useMemo,
   useState,
   useEffect,
 } from "react";
@@ -278,9 +277,6 @@ const discountedMobileFee =
   denkiDiscount -
   dcardDiscount -
   longTermDiscount;
-
-const yearlyCardUse =
-  monthlyUse * 12; 
 
   const goldMobilePoint =
   discountedMobileFee *
