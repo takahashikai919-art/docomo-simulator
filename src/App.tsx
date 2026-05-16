@@ -372,7 +372,7 @@ const chartData = [
           <div className="p-5"></div>
 
           <div className="p-5 text-center border-l">
-            <div className="text-3xl font-black text-amber-500">
+            <div className="text-xl md:text-3xl font-black text-amber-500">
               GOLD
             </div>
 
@@ -382,7 +382,7 @@ const chartData = [
           </div>
 
           <div className="p-5 text-center border-l">
-            <div className="text-3xl font-black text-zinc-700">
+            <div className="text-xl md:text-3xl font-black text-zinc-700">
               PLATINUM
             </div>
 
@@ -708,7 +708,7 @@ const chartData = [
     実利益内訳
   </div>
 
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+  <div className="grid grid-cols-2 gap-3">
 
     {/* GOLD */}
     <div className="bg-amber-50 rounded-2xl p-5">
@@ -825,26 +825,26 @@ const chartData = [
 </div>
 
         {/* 結果 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 bg-emerald-50">
+        <div className="grid grid-cols-3 bg-emerald-50">
 
           <div className="p-5 font-bold">
             実質利益
           </div>
 
           <div className="p-5 border-l text-center">
-            <div className="text-2xl md:text-4xl font-black text-emerald-600">
+            <div className="text-lg md:text-4xl font-black text-emerald-600">
               {Math.round(gold).toLocaleString()}円
             </div>
           </div>
 
           <div className="p-5 border-l text-center">
-            <div className="text-2xl md:text-4xl font-black text-emerald-600">
+            <div className="text-lg md:text-4xl font-black text-emerald-600">
               {Math.round(platinum).toLocaleString()}円
             </div>
           </div>
         </div>
         {/* グラフ */}
-<div className="bg-white mt-6 rounded-2xl shadow-xl p-6 h-96">
+<div className="bg-white mt-6 rounded-2xl shadow-xl p-4 h-72 md:h-96">
 
   <div className="text-2xl font-bold mb-4">
     利益比較
