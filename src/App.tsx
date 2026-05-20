@@ -912,13 +912,13 @@ if (showPlatinum) {
     <CardSettings
     copyButtons={[
   {
-    label: "GOLDにコピー",
+    label: "→ GOLD",
     onClick: () =>
       setGoldConfig(regularConfig),
   },
 
   {
-    label: "PLATINUMにコピー",
+    label: "→ PLATINUM",
     onClick: () =>
       setPlatinumConfig(regularConfig),
   },
@@ -936,13 +936,13 @@ if (showPlatinum) {
       title="GOLD"
       copyButtons={[
   {
-    label: "REGULARにコピー",
+    label: "→ REGULAR",
     onClick: () =>
       setRegularConfig(goldConfig),
   },
 
   {
-    label: "PLATINUMにコピー",
+    label: "→ PLATINUM",
     onClick: () =>
       setPlatinumConfig(goldConfig),
   },
@@ -958,13 +958,13 @@ if (showPlatinum) {
       title="PLATINUM"
       copyButtons={[
   {
-    label: "REGULARにコピー",
+    label: "→ REGULAR",
     onClick: () =>
       setRegularConfig(platinumConfig),
   },
 
   {
-    label: "GOLDにコピー",
+    label: "→ GOLD",
     onClick: () =>
       setGoldConfig(platinumConfig),
   },
