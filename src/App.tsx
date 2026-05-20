@@ -337,7 +337,7 @@ function CardSettings({
 }: any) {
 
   return (
-    <div className="bg-white rounded-2xl p-4 shadow text-center w-full w-full md:max-w-sm">
+    <div className="bg-white rounded-2xl p-4 shadow text-center w-full w-full md:w-full md:w-[300px]">
 
       <div className={`text-xl font-black mb-4 ${color}`}>
         {title}
@@ -633,7 +633,7 @@ function CardResult({
         rounded-2xl
         p-6
         text-center
-        w-full md:min-w-[220px]
+        w-full md:w-full w-full md:w-[300px]
         shadow
       "
     >
@@ -874,7 +874,7 @@ if (showPlatinum) {
     利用サービス
   </div>
 
- <div className="flex flex-wrap justify-center gap-3 md:gap-4">
+ <div className="flex flex-wrap justify-center gap-4">
 
   {showRegular && (
     <CardSettings
