@@ -337,7 +337,7 @@ function CardSettings({
 }: any) {
 
   return (
-    <div className="bg-white rounded-2xl p-4 shadow text-center w-full w-full md:w-full md:w-[300px]">
+    <div className="bg-white rounded-2xl p-4 shadow text-center w-full w-full md:min-w-[280px] max-w-[280px]">
 
       <div className={`text-xl font-black mb-4 ${color}`}>
         {title}
@@ -633,7 +633,7 @@ function CardResult({
         rounded-2xl
         p-6
         text-center
-        w-full md:w-full w-full md:w-[300px]
+        w-full md:w-full min-w-[280px] max-w-[280px]
         shadow
       "
     >
@@ -874,7 +874,12 @@ if (showPlatinum) {
     利用サービス
   </div>
 
- <div className="flex flex-wrap justify-center gap-4">
+ <div className="
+  flex
+  gap-4
+  overflow-x-auto
+  pb-2
+">
 
   {showRegular && (
     <CardSettings
@@ -1107,7 +1112,12 @@ if (showPlatinum) {
     実質利益(年間)
   </div>
 
-  <div className="flex flex-wrap justify-center gap-4">
+  <div className="
+  flex
+  gap-4
+  overflow-x-auto
+  pb-2
+">
 
     {showRegular && (
       <CardResult
