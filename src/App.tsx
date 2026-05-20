@@ -334,6 +334,7 @@ function CardSettings({
   color,
   config,
   setConfig,
+  copyButtons,
 }: any) {
 
   return (
@@ -341,6 +342,30 @@ function CardSettings({
 
       <div className={`text-xl font-black mb-4 ${color}`}>
         {title}
+        <div className="flex justify-center gap-2 mt-4">
+
+  {copyButtons?.map((button: any) => (
+
+    <button
+      key={button.label}
+      onClick={button.onClick}
+      className="
+  bg-slate-200
+  hover:bg-slate-300
+  px-3
+  py-1
+  rounded-xl
+  text-sm
+  font-bold
+  whitespace-nowrap
+"
+    >
+      {button.label}
+    </button>
+
+  ))}
+
+</div>
       </div>
 
       {/* ケータイプラン */}
@@ -885,16 +910,43 @@ if (showPlatinum) {
 
   {showRegular && (
     <CardSettings
+    copyButtons={[
+  {
+    label: "GOLDにコピー",
+    onClick: () =>
+      setGoldConfig(regularConfig),
+  },
+
+  {
+    label: "PLATINUMにコピー",
+    onClick: () =>
+      setPlatinumConfig(regularConfig),
+  },
+]}
       title="REGULAR"
       color="text-slate-700"
       config={regularConfig}
       setConfig={setRegularConfig}
     />
   )}
+  
 
   {showGold && (
     <CardSettings
       title="GOLD"
+      copyButtons={[
+  {
+    label: "REGULARにコピー",
+    onClick: () =>
+      setRegularConfig(goldConfig),
+  },
+
+  {
+    label: "PLATINUMにコピー",
+    onClick: () =>
+      setPlatinumConfig(goldConfig),
+  },
+]}
       color="text-amber-500"
       config={goldConfig}
       setConfig={setGoldConfig}
@@ -904,6 +956,19 @@ if (showPlatinum) {
   {showPlatinum && (
     <CardSettings
       title="PLATINUM"
+      copyButtons={[
+  {
+    label: "REGULARにコピー",
+    onClick: () =>
+      setRegularConfig(platinumConfig),
+  },
+
+  {
+    label: "GOLDにコピー",
+    onClick: () =>
+      setGoldConfig(platinumConfig),
+  },
+]}
       color="text-zinc-700"
       config={platinumConfig}
       setConfig={setPlatinumConfig}
@@ -1153,6 +1218,7 @@ if (showPlatinum) {
 
   </div>
 </div>
+
 
 </div>
   
