@@ -874,12 +874,14 @@ if (showPlatinum) {
     利用サービス
   </div>
 
- <div className="
-  flex
-  gap-4
-  overflow-x-auto
-  pb-2
-">
+ <div className="flex justify-center">
+
+  <div className="
+    flex
+    gap-4
+    overflow-x-auto
+    pb-2
+  ">
 
   {showRegular && (
     <CardSettings
@@ -913,6 +915,7 @@ if (showPlatinum) {
 </div>
 
   <div>
+</div>
 
 </div>
         {/* 入力 */}
@@ -1112,12 +1115,14 @@ if (showPlatinum) {
     実質利益(年間)
   </div>
 
+  <div className="flex justify-center">
+
   <div className="
-  flex
-  gap-4
-  overflow-x-auto
-  pb-2
-">
+    flex
+    gap-4
+    overflow-x-auto
+    pb-2
+  ">
 
     {showRegular && (
       <CardResult
@@ -1147,6 +1152,7 @@ if (showPlatinum) {
     )}
 
   </div>
+</div>
 
 </div>
   
