@@ -3,16 +3,6 @@ import {
   useEffect,
 } from "react";
 
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-  Cell,
-} from "recharts";
-
 const cards = {
   REGULAR: {
     annualFee: 0,
