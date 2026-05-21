@@ -18,6 +18,12 @@ const cards = {
     annualFee: 0,
   },
 
+  GOLD_U: {
+  annualFee: 3300,
+  mobileRate: 0.05,
+  hikariRate: 0.05,
+},
+
   GOLD: {
     annualFee: 11000,
   },
@@ -33,7 +39,7 @@ const mobilePlans = {
     goldRate: 0.10,
     platinumRate: 0.20,
     familyTarget: true,
-    
+    goldURate: 0.05,
     denkiTarget: false,
     dcardDiscount: 187,
     longTermTarget: false,
@@ -46,7 +52,7 @@ const mobilePlans = {
   goldRate: 0.10,
   platinumRate: 0.20,
   familyTarget: true,
-  
+  goldURate: 0.05,
   denkiTarget: false,
   dcardDiscount: 187,
   longTermTarget: false,
@@ -59,7 +65,7 @@ const mobilePlans = {
   goldRate: 0.01,
   platinumRate: 0.01,
   familyTarget: false,
-  
+  goldURate: 0.05,
   denkiTarget: false,
   dcardDiscount: 187,
   longTermTarget: false,
@@ -72,7 +78,8 @@ const mobilePlans = {
   goldRate: 0.01,
   platinumRate: 0.01,
   familyTarget: false,
-  
+  goldURate: 0.05,
+dcardDiscount: 550,
   denkiTarget: true,
   longTermTarget: false,
   familyDiscount: 0,
@@ -84,7 +91,8 @@ const mobilePlans = {
   goldRate: 0.10,
   platinumRate: 0.20,
   familyTarget: true,
-  
+  goldURate: 0.05,
+dcardDiscount: 550,
   denkiTarget: true,
   longTermTarget: true,
   familyDiscount: 1210,
@@ -96,7 +104,8 @@ const mobilePlans = {
   goldRate: 0.10,
   platinumRate: 0.20,
   familyTarget: true,
-  
+  goldURate: 0.05,
+dcardDiscount: 550,
   denkiTarget: true,
   longTermTarget: true,
   familyDiscount: 1210,
@@ -111,6 +120,7 @@ const hikariPlans = {
     discount: 0,
 
     goldRate: 0.10,
+    goldURate: 0.05,
 platinumRate: 0.20,
   },
 
@@ -119,6 +129,7 @@ platinumRate: 0.20,
     discount: 1100,
 
     goldRate: 0.10,
+    goldURate: 0.05,
     platinumRate: 0.20,
   },
 
@@ -127,6 +138,7 @@ platinumRate: 0.20,
     discount: 1100,
 
     goldRate: 0.10,
+    goldURate: 0.05,
     platinumRate: 0.20,
   },
 
@@ -135,6 +147,7 @@ platinumRate: 0.20,
     discount: 1210,
 
     goldRate: 0.10,
+    goldURate: 0.05,
     platinumRate: 0.20,
   },
 
@@ -143,6 +156,7 @@ platinumRate: 0.20,
     discount: 1210,
 
     goldRate: 0.10,
+    goldURate: 0.05,
     platinumRate: 0.20,
   },
 };
@@ -155,18 +169,24 @@ const denkiPlans = {
 
   basic: {
     goldRate: 0.02,
+    goldURate: 0.02,
     platinumRate: 0.02,
   },
 
   green: {
     goldRate: 0.06,
+    goldURate: 0.06,
     platinumRate: 0.12,
   },
 };
 
 function calculateCard(
   config: any,
-  cardType: "REGULAR" | "GOLD" | "PLATINUM",
+  cardType:
+  "REGULAR"
+  | "GOLD"
+  | "GOLD_U"
+  | "PLATINUM",
   monthlyUse: number
 ) {
 
@@ -200,8 +220,8 @@ const denki =
     : 0;
 
   const denkiDiscount =
-  config.denkiOwner !== "none" &&
-  plan.denkiTarget
+  plan.denkiTarget &&
+  config.denkiOwner !== "none"
     ? 110
     : 0;
 
@@ -246,25 +266,35 @@ const denki =
     ? plan.platinumRate
     : cardType === "GOLD"
       ? plan.goldRate
-      : 0.01;
+      : cardType === "GOLD_U"
+        ? plan.goldURate
+        : 0.01;
 
   const hikariRate =
   cardType === "PLATINUM"
     ? hikari?.platinumRate ?? 0
     : cardType === "GOLD"
       ? hikari?.goldRate ?? 0
-      : 0.01;
+      : cardType === "GOLD_U"
+        ? hikari?.goldURate ?? 0
+        : 0.01;
 
   const denkiRate =
   cardType === "PLATINUM"
     ? denki?.platinumRate ?? 0
     : cardType === "GOLD"
       ? denki?.goldRate ?? 0
-      : config.denkiPlan === "green"
-        ? 0.04
-        : config.denkiPlan === "basic"
-          ? 0.02
-          : 0;
+      : cardType === "GOLD_U"
+        ? config.denkiPlan === "green"
+          ? 0.06
+          : config.denkiPlan === "basic"
+            ? 0.02
+            : 0
+        : config.denkiPlan === "green"
+          ? 0.04
+          : config.denkiPlan === "basic"
+            ? 0.02
+            : 0;
 
   const poikatsuRate =
     cardType === "PLATINUM"
@@ -518,23 +548,23 @@ function CardSettings({
   </div>
 
   <select
-    value={config.denkiOwner}
-    onChange={(e) => {
+  value={config.denkiOwner}
+  onChange={(e) => {
 
-  const value = e.target.value;
+    const value = e.target.value;
 
-  setConfig({
-    ...config,
+    setConfig({
+      ...config,
 
-    denkiOwner: value,
+      denkiOwner: value,
 
-    denkiPlan:
-      value === "self"
-        ? "basic"
-        : "none",
-  });
+      denkiPlan:
+        value === "self"
+          ? "basic"
+          : "none",
+    });
 
-}}
+  }}
     className="border rounded-xl p-2 w-full max-w-xs mx-auto"
   >
     <option value="none">
@@ -734,7 +764,7 @@ export default function App() {
   longTerm: "none",
   denkiUse: 10000,
   hikariOwner: "none",
-denkiOwner: false,
+  denkiOwner: "none",
 };
 
   const [monthlyUse, setMonthlyUse] =
@@ -744,7 +774,7 @@ denkiOwner: false,
         localStorage.getItem(
           "monthlyUse"
         );
-
+        
       return saved
         ? Number(saved)
         : 50000;
@@ -761,6 +791,9 @@ denkiOwner: false,
 const [regularConfig, setRegularConfig] =
   useState(defaultConfig);
 
+const [goldUConfig, setGoldUConfig] =
+  useState(defaultConfig);  
+
 const [goldConfig, setGoldConfig] =
   useState(defaultConfig);
 
@@ -768,13 +801,16 @@ const [platinumConfig, setPlatinumConfig] =
   useState(defaultConfig);
 
 const [showRegular, setShowRegular] =
-  useState(true);
+  useState(false);
 
 const [showGold, setShowGold] =
-  useState(true);
+  useState(false);
+
+const [showGoldU, setShowGoldU] =
+  useState(false);  
 
 const [showPlatinum, setShowPlatinum] =
-  useState(true);
+  useState(false);
 
 const regularData =
   calculateCard(
@@ -783,12 +819,22 @@ const regularData =
     monthlyUse
   );
 
+const goldUData =
+  calculateCard(
+    goldUConfig,
+    "GOLD_U",
+    monthlyUse
+  );  
+
 const goldData =
   calculateCard(
     goldConfig,
     "GOLD",
     monthlyUse
   );
+
+const goldU =
+  goldUData.profit;  
 
 const platinumData =
   calculateCard(
@@ -804,7 +850,13 @@ const gold =
   goldData.profit;
 
 const platinum =
-  platinumData.profit;    
+  platinumData.profit; 
+
+const hasVisibleCards =
+  showRegular ||
+  showGoldU ||
+  showGold ||
+  showPlatinum;  
 
 const chartData = [];
 
@@ -812,6 +864,13 @@ if (showRegular) {
   chartData.push({
     name: "REGULAR",
     value: regular,
+  });
+}
+
+if (showGoldU) {
+  chartData.push({
+    name: "GOLD(U)",
+    value: goldU,
   });
 }
 
@@ -830,6 +889,7 @@ if (showPlatinum) {
 }
   
   return (
+    
     <div className="min-h-screen bg-slate-100 p-3 md:p-6 overflow-x-hidden">
       <div className="
   max-w-7xl
@@ -863,17 +923,31 @@ if (showPlatinum) {
     </button>
 
     <button
-      onClick={() =>
-        setShowGold(!showGold)
-      }
-      className={`rounded-xl px-4 py-2 ${
-        showGold
-          ? "bg-amber-500 text-white"
-          : "bg-white border"
-      }`}
-    >
-      GOLD
-    </button>
+  onClick={() =>
+    setShowGoldU(!showGoldU)
+  }
+  className={`rounded-xl px-4 py-2 ${
+    showGoldU
+      ? "bg-yellow-500 text-white"
+      : "bg-white border"
+  }`}
+>
+  GOLD(U)
+</button>
+
+
+<button
+  onClick={() =>
+    setShowGold(!showGold)
+  }
+  className={`rounded-xl px-4 py-2 ${
+    showGold
+      ? "bg-amber-500 text-white"
+      : "bg-white border"
+  }`}
+>
+  GOLD
+</button>
 
     <button
       onClick={() =>
@@ -895,11 +969,34 @@ if (showPlatinum) {
 {/* オプション */}
 <div className="p-5 border-b bg-slate-50">
 
-  <div className="font-bold mb-3">
-    利用サービス
+  {!showRegular &&
+ !showGold &&
+ !showGoldU &&
+ !showPlatinum && (
+
+  <div className="
+    text-center
+    text-slate-500
+    py-8
+  ">
+    表示カードを選択してください
   </div>
 
- <div className="flex justify-center">
+)}
+
+  <div className="font-bold mb-3">
+
+    <div
+  style={{
+    display: hasVisibleCards
+      ? "block"
+      : "none",
+  }}
+>
+
+    {/* 利用サービス */}
+ 
+<div className="flex justify-center">
 
   <div className="
     flex
@@ -909,40 +1006,81 @@ if (showPlatinum) {
   ">
 
   {showRegular && (
-    <CardSettings
+  <CardSettings
+    title="REGULAR"
+    color="text-slate-700"
+    config={regularConfig}
+    setConfig={setRegularConfig}
+
+    copyButtons={[
+
+{
+  label: "→ GO(U)",
+  onClick: () =>
+    setGoldUConfig(regularConfig),
+},
+
+      {
+        label: "→ GO",
+        onClick: () =>
+          setGoldConfig(regularConfig),
+      },
+
+      {
+        label: "→ P",
+        onClick: () =>
+          setPlatinumConfig(regularConfig),
+      },
+    ]}
+  />
+)}
+  
+  {showGoldU && (
+  <CardSettings
+    title="GO(U)"
     copyButtons={[
   {
-    label: "→ GOLD",
+    label: "→ R",
     onClick: () =>
-      setGoldConfig(regularConfig),
+      setRegularConfig(goldUConfig),
   },
 
   {
-    label: "→ PLATINUM",
+    label: "→ GO",
     onClick: () =>
-      setPlatinumConfig(regularConfig),
+      setGoldConfig(goldUConfig),
+  },
+
+  {
+    label: "→ P",
+    onClick: () =>
+      setPlatinumConfig(goldUConfig),
   },
 ]}
-      title="REGULAR"
-      color="text-slate-700"
-      config={regularConfig}
-      setConfig={setRegularConfig}
-    />
-  )}
-  
+    color="text-yellow-600"
+    config={goldUConfig}
+setConfig={setGoldUConfig}
+  />
+)}
 
   {showGold && (
     <CardSettings
-      title="GOLD"
+      title="GO"
       copyButtons={[
   {
-    label: "→ REGULAR",
+    label: "→ R",
     onClick: () =>
       setRegularConfig(goldConfig),
   },
 
   {
-    label: "→ PLATINUM",
+  label: "→ GO(U)",
+  onClick: () =>
+    setGoldUConfig(goldConfig),
+},
+
+  {
+    label: "→ P",
     onClick: () =>
       setPlatinumConfig(goldConfig),
   },
@@ -958,13 +1096,19 @@ if (showPlatinum) {
       title="PLATINUM"
       copyButtons={[
   {
-    label: "→ REGULAR",
+    label: "→ R",
     onClick: () =>
       setRegularConfig(platinumConfig),
   },
 
   {
-    label: "→ GOLD",
+  label: "→ GO(U)",
+  onClick: () =>
+    setGoldUConfig(platinumConfig),
+},
+
+  {
+    label: "→ GO",
     onClick: () =>
       setGoldConfig(platinumConfig),
   },
@@ -986,6 +1130,13 @@ if (showPlatinum) {
         {/* 入力 */}
         {/* 入力 */}
 </div>
+<div
+  style={{
+    display: hasVisibleCards
+      ? "block"
+      : "none",
+  }}
+>
 
 {/* 利用額入力 */}
 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border-b p-5">
@@ -1089,6 +1240,46 @@ if (showPlatinum) {
       </div>
     )}
 
+    {/* GOLD(U) */}
+    {showGoldU && (
+      <div className="bg-white rounded-2xl p-4 min-w-[260px] shadow">
+
+        <div className="text-xl font-black text-yellow-600 mb-3">
+          GOLD(U)
+        </div>
+
+        <div className="flex flex-col gap-2 text-sm">
+
+          <div>
+            みんなドコモ割 :
+            -{goldUData.familyDiscount}円
+          </div>
+
+          <div>
+            ドコモ光セット割 :
+            -{goldUData.hikariDiscount}円
+          </div>
+
+          <div>
+            ドコモでんき割 :
+            -{goldUData.denkiDiscount}円
+          </div>
+
+          <div>
+            dカード支払割 :
+            -{goldUData.dcardDiscount}円
+          </div>
+
+          <div>
+            長期利用割 :
+            -{goldUData.longTermDiscount}円
+          </div>
+
+        </div>
+
+      </div>
+    )}
+
     {/* GOLD */}
     {showGold && (
       <div className="bg-white rounded-2xl p-4 min-w-[260px] shadow">
@@ -1128,7 +1319,7 @@ if (showPlatinum) {
 
       </div>
     )}
-
+    
     {/* PLATINUM */}
     {showPlatinum && (
       <div className="bg-white rounded-2xl p-4 min-w-[260px] shadow">
@@ -1198,6 +1389,15 @@ if (showPlatinum) {
       />
     )}
 
+    {showGoldU && (
+      <CardResult
+        title="GOLD(U)"
+        color="text-yellow-600"
+        data={goldUData}
+        profit={goldU}
+      />
+    )}
+
     {showGold && (
       <CardResult
         title="GOLD"
@@ -1206,7 +1406,7 @@ if (showPlatinum) {
         profit={gold}
       />
     )}
-
+    
     {showPlatinum && (
       <CardResult
         title="PLATINUM"
@@ -1217,67 +1417,18 @@ if (showPlatinum) {
     )}
 
   </div>
-</div>
-
 
 </div>
-  
-                {/* グラフ */}
-<div className="
-  bg-white
-  mt-6
-  rounded-2xl
-  shadow-xl
-  p-4
-  h-[320px]
-  md:h-[500px]
-  overflow-x-auto
-">
 
-  <div className="text-2xl font-bold mb-4">
-    利益比較
-  </div>
-
-  <ResponsiveContainer width="100%" height="100%">
-    <BarChart
-  width={500}
-  data={chartData}
-  margin={{
-    top: 20,
-    right: 20,
-    left: 20,
-    bottom: 30,
-  }}
->
-      <XAxis
-  dataKey="name"
-  tick={{ fontSize: 14 }}
-/>
-
-      <YAxis />
-
-      <Tooltip />
-
-      <Bar
-  dataKey="value"
-  radius={[10, 10, 0, 0]}
->
-  {chartData.map((entry, index) => (
-    <Cell
-      key={`cell-${index}`}
-      fill={
-        entry.value >= 0
-          ? "#10b981"
-          : "#ef4444"
-      }
-    />
-  ))}
-</Bar>
-
-    </BarChart>
- </ResponsiveContainer>
 </div>
 
 </div>
+
+</div>
+
+</div>
+
+</div>
+
 );
 }
