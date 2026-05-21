@@ -186,13 +186,13 @@ const denki =
   ];
 
   const familyDiscount =
-    plan.familyTarget
-      ? config.familyCount >= 3
-        ? plan.familyDiscount
-        : config.familyCount >= 2
-        ? plan.familyDiscount / 2
-        : 0
-      : 0;
+  plan.familyTarget
+    ? config.familyCount >= 3
+      ? 1210
+      : config.familyCount >= 2
+      ? 550
+      : 0
+    : 0;
 
   const hikariDiscount =
   config.hikariOwner !== "none"
